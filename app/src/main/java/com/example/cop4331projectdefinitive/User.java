@@ -4,6 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.JsonElement;
+
 @Entity
 public class User {
     public User(String userName, int password, String userType) {
