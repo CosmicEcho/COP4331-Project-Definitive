@@ -1,18 +1,22 @@
 package com.example.cop4331projectdefinitive;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
+import androidx.room.RoomDatabase;
 
 /**
  * LogInActivity.java is considered the main activity class, due it being the first screen a user
  * will encounter when first opening the application. As such, its matching XML layout file is
  * "activity_main.xml"
  *
- * This class handles the process of logging users in by querying the database and resgistering
+ * This class handles the process of logging users in by querying the database and registering
  * users to the database.
  */
 
@@ -20,6 +24,8 @@ public class LogInActivity extends AppCompatActivity {
 
     EditText emailTxt;
     EditText passwordTxt;
+    Button loginButton;
+    Button registerButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +34,8 @@ public class LogInActivity extends AppCompatActivity {
 
         emailTxt = findViewById(R.id.emailTxt);
         passwordTxt = findViewById(R.id.passwordTxt);
+        loginButton = findViewById(R.id.loginButton);
+        registerButton = findViewById(R.id.registerButton);
     }
 
     public void loginButtonOnClick (View view) {
@@ -43,8 +51,8 @@ public class LogInActivity extends AppCompatActivity {
             return;
         }
 
-        int hashedPass = passwordHash(userPassword);
-        //TODO: Actually make a working database query lmao
+        CheckLoginEmail checkLoginEmail = new CheckLoginEmail();
+        checkLoginEmail.execute(userEmail);
     }
 
     public void registerButtonOnClick (View view) {
@@ -60,16 +68,13 @@ public class LogInActivity extends AppCompatActivity {
             return;
         }
 
-        int hashedPass = passwordHash(userPassword);
-
-        //TODO: Actually make a working database register action lmao!!!!
-
-        Toast.makeText(this, "Registration Successful! Please log in using your email and password.", Toast.LENGTH_LONG).show();
+        CheckRegisterEmail checkRegisterEmail = new CheckRegisterEmail();
+        checkRegisterEmail.execute(userEmail);
     }
 
-    public int passwordHash (String password) {
+    public double passwordHash (String password) {
         char[] passwordCharArr = password.toCharArray();
-        int hashedPass = passwordCharArr[0];
+        double hashedPass = passwordCharArr[0];
         for(int i = 1; i < password.length(); i++)
         {
             hashedPass = hashedPass * passwordCharArr[i];
@@ -86,5 +91,116 @@ public class LogInActivity extends AppCompatActivity {
     public boolean validPassword(String password) {
         if(password.length() >= 8 && password.length() <= 32) return true;
         else return false;
+    }
+
+    private class CheckRegisterEmail extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                    AppDatabase.class, "user-database").build();
+            User foundUser = db.userDao().findByUsername(strings[0]);
+            if(foundUser == null) return false;
+            else return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean == true)
+                Toast.makeText(LogInActivity.this,
+                        "This email is already taken, please use another email.", Toast.LENGTH_LONG).show();
+            else {
+                RegisterNewUser registerUser = new RegisterNewUser();
+                registerUser.execute();
+            }
+        }
+    }
+
+    private class RegisterNewUser extends AsyncTask<Void, Void, Void> {
+        private String userName;
+        private double password;
+
+        @Override
+        protected void onPreExecute() {
+            userName = emailTxt.getText().toString();
+            password = passwordHash(passwordTxt.getText().toString());
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            Toast.makeText(LogInActivity.this,
+                    "Registration Successful! Please log in using your email and password.",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                    AppDatabase.class, "user-database").build();
+
+            User newUser = new User(userName, password, "customer");
+            db.userDao().insertAll(newUser);
+
+            return null;
+        }
+    }
+
+    private class CheckLoginEmail extends AsyncTask<String, Void, Boolean> {
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            if (aBoolean == true) {
+                InitLogIn initLogIn = new InitLogIn();
+                initLogIn.execute();
+            }
+            else {
+                Toast.makeText(LogInActivity.this,
+                        "Log In Failed: No users found with this email.",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        protected Boolean doInBackground(String... strings) {
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                    AppDatabase.class, "user-database").build();
+            User foundUser = db.userDao().findByUsername(strings[0]);
+            if(foundUser == null) return false;
+            else return true;
+        }
+    }
+
+    private class InitLogIn extends AsyncTask<Void, Void, Boolean> {
+        private String userName;
+        private double password;
+
+        @Override
+        protected void onPreExecute() {
+            userName = emailTxt.getText().toString();
+            password = passwordHash(passwordTxt.getText().toString());
+        }
+
+        @Override
+        protected void onPostExecute(Boolean aBoolean) {
+            super.onPostExecute(aBoolean);
+            if (aBoolean) {
+                //TODO: Fix the login success function to direct to the new activity.
+                Toast.makeText(LogInActivity.this,
+                        "Successfully Logged In! Now to make the actual intent change!", Toast.LENGTH_LONG).show();
+            }
+            else {
+                Toast.makeText(LogInActivity.this,
+                        "Log In Failed: Passwords do not match.", Toast.LENGTH_SHORT).show();
+            }
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... voids) {
+            AppDatabase db = Room.databaseBuilder(getApplicationContext(),
+                    AppDatabase.class, "user-database").build();
+            User foundUser = db.userDao().findByUsername(userName);
+            if(foundUser.password == password) return true;
+            else return false;
+        }
     }
 }

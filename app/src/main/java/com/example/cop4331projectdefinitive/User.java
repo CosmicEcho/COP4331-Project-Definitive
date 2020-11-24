@@ -8,7 +8,7 @@ import com.google.gson.JsonElement;
 
 @Entity
 public class User {
-    public User(String userName, int password, String userType) {
+    public User(String userName, double password, String userType) {
         this.userName = userName;
         this.password = password;
         this.userType = userType;
@@ -22,7 +22,7 @@ public class User {
     public String userName;
 
     @ColumnInfo(name = "pass_word")
-    public int password;
+    public double password;
 
     @ColumnInfo(name = "user_type")
     public String userType;

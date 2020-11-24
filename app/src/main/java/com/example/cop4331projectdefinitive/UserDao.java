@@ -3,7 +3,9 @@ package com.example.cop4331projectdefinitive;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -11,6 +13,15 @@ import java.util.List;
 public interface UserDao {
     @Query("SELECT * FROM user")
     List<User> getAll();
+
+    @Query("SELECT * FROM user WHERE user_name LIKE :email")
+    User findByUsername(String email);
+
+    @Query("SELECT * FROM user WHERE user_order IS NOT NULL")
+    List<User> findAllWithOrders();
+
+    @Update
+    public void updateUser(User... users);
 
     @Insert
     void insertAll(User... users);
