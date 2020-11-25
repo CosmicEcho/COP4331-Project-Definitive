@@ -1,5 +1,6 @@
 package com.example.cop4331projectdefinitive;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -185,8 +186,8 @@ public class LogInActivity extends AppCompatActivity {
             super.onPostExecute(aBoolean);
             if (aBoolean) {
                 //TODO: Fix the login success function to direct to the new activity.
-                Toast.makeText(LogInActivity.this,
-                        "Successfully Logged In! Now to make the actual intent change!", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LogInActivity.this, MenuActivity.class);
+                startActivity(intent);
             }
             else {
                 Toast.makeText(LogInActivity.this,

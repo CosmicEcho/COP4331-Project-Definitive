@@ -28,4 +28,16 @@ public class MenuItem {
     public double getItemPrice() {
         return itemPrice;
     }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public String getItemDescription() {
+        return itemDescription;
+    }
+
+    public ArrayList<String> getItemDetail() {
+        return itemDetail;
+    }
 }
