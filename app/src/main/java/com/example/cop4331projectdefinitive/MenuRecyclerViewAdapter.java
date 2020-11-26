@@ -1,6 +1,7 @@
 package com.example.cop4331projectdefinitive;
 
 import android.content.Context;
+import android.content.Intent;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,9 +19,10 @@ import java.util.ArrayList;
 
 public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerViewAdapter.ViewHolder> {
     private static final String TAG = "MenuRecyclerViewAdapter";
+    public static final String FOOD_KEY = "foodKey";
 
     private ArrayList<MenuItem> menuItems = new ArrayList<>();
-    Context mContext;
+    private Context mContext;
 
     public MenuRecyclerViewAdapter(Context mContext) {
         this.mContext = mContext;
@@ -42,7 +44,9 @@ public class MenuRecyclerViewAdapter extends RecyclerView.Adapter<MenuRecyclerVi
         holder.parent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Clicked On Food Item:" + menuItems.get(position).getItemName(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(mContext, MenuItemActivity.class);
+                intent.putExtra(FOOD_KEY, menuItems.get(position).getId());
+                mContext.startActivity(intent);
             }
         });
     }

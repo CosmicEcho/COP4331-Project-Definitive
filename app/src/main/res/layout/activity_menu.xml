@@ -8,12 +8,11 @@
 
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/menuTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/smooth_cyan"
-        android:text="Menu"
-        android:textAlignment="center"
+        android:text="   Menu"
         android:textColor="@color/smooth_gray"
         android:textSize="28dp"
         android:textStyle="bold"
@@ -23,24 +22,35 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/toCartButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintEnd_toEndOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView"
+        app:layout_constraintBottom_toBottomOf="@+id/menuTextView"
+        app:layout_constraintEnd_toEndOf="@+id/menuTextView"
+        app:layout_constraintTop_toTopOf="@+id/menuTextView"
         app:srcCompat="@drawable/shopping_cart" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/logoutButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:backgroundTint="@color/smooth_cyan"
         android:text="Logout"
         android:textColor="@color/smooth_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/menuTextView"
+        app:layout_constraintEnd_toStartOf="@+id/viewOrderButton"
+        app:layout_constraintTop_toTopOf="@+id/menuTextView" />
+
+    <Button
+        android:id="@+id/viewOrderButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:backgroundTint="@color/smooth_cyan"
-        app:layout_constraintBottom_toBottomOf="@+id/textView"
-        app:layout_constraintStart_toStartOf="@+id/textView"
-        app:layout_constraintTop_toTopOf="@+id/textView" />
+        android:text="View Order"
+        android:textColor="@color/smooth_gray"
+        app:layout_constraintBottom_toBottomOf="@+id/menuTextView"
+        app:layout_constraintEnd_toStartOf="@+id/toCartButton"
+        app:layout_constraintTop_toTopOf="@+id/menuTextView" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -53,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/menuTextView"
         app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -70,7 +80,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toBottomOf="@id/menuSearchView" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/appetizerRecView"
@@ -147,6 +157,23 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/drinkText" />
 
+            <EditText
+                android:id="@+id/menuSearchView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Search menu..."
+                app:layout_constraintEnd_toStartOf="@+id/searchButton"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/searchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/search_image"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:onClick="onClickSearchButton"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

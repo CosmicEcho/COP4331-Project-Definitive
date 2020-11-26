@@ -185,7 +185,6 @@ public class LogInActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             if (aBoolean) {
-                //TODO: Fix the login success function to direct to the new activity.
                 Intent intent = new Intent(LogInActivity.this, MenuActivity.class);
                 startActivity(intent);
             }
@@ -200,7 +199,10 @@ public class LogInActivity extends AppCompatActivity {
             AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                     AppDatabase.class, "user-database").build();
             User foundUser = db.userDao().findByUsername(userName);
-            if(foundUser.password == password) return true;
+            if(foundUser.password == password) {
+                Utils.getInstance().setCurrentUser(foundUser);
+                return true;
+            }
             else return false;
         }
     }

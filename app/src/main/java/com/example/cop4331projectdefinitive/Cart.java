@@ -6,7 +6,7 @@ public class Cart {
     public ArrayList<MenuItem> cartContents;
     private double totalCartCost;
 
-    public Cart(ArrayList<MenuItem> cartContents) {
+    public Cart() {
         this.cartContents = new ArrayList<MenuItem>();
         this.totalCartCost = 0.0;
     }
