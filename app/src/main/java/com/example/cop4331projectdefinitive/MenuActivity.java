@@ -1,9 +1,11 @@
 package com.example.cop4331projectdefinitive;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -67,7 +69,7 @@ public class MenuActivity extends AppCompatActivity {
         drinkRecViewAdapter.setMenuItems(Utils.getInstance().getDrinkList());
     }
 
-    public void onClickSearchButton (View view){
+    public void onClickSearchButton (View view) {
         ArrayList<MenuItem> allItems = Utils.getInstance().getAllItems();
         boolean foundItem = false;
 
@@ -84,6 +86,36 @@ public class MenuActivity extends AppCompatActivity {
             Toast.makeText(this, "No items found with " + searchEditText.getText().toString(),
                     Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void onClickLogOut (View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Are you sure you want to log out?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent(MenuActivity.this, LogInActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+            }
+        });
+        builder.create().show();
+    }
+
+    public void onClickViewOrderStatus (View view) {
+        Intent intent = new Intent(this, ViewOrderActivity.class);
+        startActivity(intent);
+    }
+
+    public void onClickCart (View view) {
+        Intent intent = new Intent(this, CartActivity.class);
+        startActivity(intent);
     }
 
 }

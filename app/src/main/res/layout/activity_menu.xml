@@ -28,7 +28,8 @@
         app:layout_constraintBottom_toBottomOf="@+id/menuTextView"
         app:layout_constraintEnd_toEndOf="@+id/menuTextView"
         app:layout_constraintTop_toTopOf="@+id/menuTextView"
-        app:srcCompat="@drawable/shopping_cart" />
+        app:srcCompat="@drawable/shopping_cart"
+        android:onClick="onClickCart"/>
 
     <Button
         android:id="@+id/logoutButton"
@@ -39,7 +40,8 @@
         android:textColor="@color/smooth_gray"
         app:layout_constraintBottom_toBottomOf="@+id/menuTextView"
         app:layout_constraintEnd_toStartOf="@+id/viewOrderButton"
-        app:layout_constraintTop_toTopOf="@+id/menuTextView" />
+        app:layout_constraintTop_toTopOf="@+id/menuTextView"
+        android:onClick="onClickLogOut"/>
 
     <Button
         android:id="@+id/viewOrderButton"
@@ -50,7 +52,8 @@
         android:textColor="@color/smooth_gray"
         app:layout_constraintBottom_toBottomOf="@+id/menuTextView"
         app:layout_constraintEnd_toStartOf="@+id/toCartButton"
-        app:layout_constraintTop_toTopOf="@+id/menuTextView" />
+        app:layout_constraintTop_toTopOf="@+id/menuTextView"
+        android:onClick="onClickViewOrderStatus"/>
 
     <ScrollView
         android:layout_width="match_parent"

@@ -166,6 +166,7 @@ public class LogInActivity extends AppCompatActivity {
             AppDatabase db = Room.databaseBuilder(getApplicationContext(),
                     AppDatabase.class, "user-database").build();
             User foundUser = db.userDao().findByUsername(strings[0]);
+            Utils.getInstance().setCurrentUser(foundUser);
             if(foundUser == null) return false;
             else return true;
         }

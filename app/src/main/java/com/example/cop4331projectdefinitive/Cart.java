@@ -3,12 +3,16 @@ package com.example.cop4331projectdefinitive;
 import java.util.ArrayList;
 
 public class Cart {
-    public ArrayList<MenuItem> cartContents;
+    private ArrayList<MenuItem> cartContents;
     private double totalCartCost;
 
     public Cart() {
         this.cartContents = new ArrayList<MenuItem>();
         this.totalCartCost = 0.0;
+    }
+
+    public ArrayList<MenuItem> getCartContents() {
+        return cartContents;
     }
 
     public void addItem(MenuItem menuItem) {
