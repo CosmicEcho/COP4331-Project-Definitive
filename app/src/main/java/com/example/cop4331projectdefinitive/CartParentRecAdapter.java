@@ -1,5 +1,6 @@
 package com.example.cop4331projectdefinitive;
 
+// Imports
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,20 +16,28 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class CartRecViewAdapter extends RecyclerView.Adapter<CartRecViewAdapter.ViewHolder> {
+/**
+ * RecyclerView Adapter that inflates the cart_card_layout and is used to populate the RecyclerView
+ * for CartActivity and activity_cart.xml. Utilizes DetailChildAdapter to populate the RecyclerView
+ * of details for each item in the cart.
+ */
 
+public class CartParentRecAdapter extends RecyclerView.Adapter<CartParentRecAdapter.ViewHolder> {
+
+    // Variable Declaration
     ArrayList<MenuItem> cartItems;
     DetailChildAdapter detailAdapter;
     Context mContext;
 
-    public CartRecViewAdapter(Context mContext) {
+    public CartParentRecAdapter(Context mContext) {
         this.mContext = mContext;
     }
 
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_card_layout, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.cart_card_layout,
+                parent, false);
         return new ViewHolder(view);
     }
 
@@ -38,12 +47,14 @@ public class CartRecViewAdapter extends RecyclerView.Adapter<CartRecViewAdapter.
         holder.foodName.setText(currentItem.getItemName());
         holder.cartCostText.setText("$ " + Double.toString(currentItem.getItemPrice()));
 
+        // RecyclerView initialization for selected details of item in the cartItems ArrayList
         detailAdapter = new DetailChildAdapter();
         holder.detailRecView.setAdapter(detailAdapter);
         LinearLayoutManager layoutManager = new LinearLayoutManager(holder.detailRecView.getContext());
         holder.detailRecView.setLayoutManager(layoutManager);
         detailAdapter.setDetailList(currentItem.appliedDetail);
 
+        // OnClickListener that deletes items from the cart and updates the RecyclerView accordingly.
         holder.deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

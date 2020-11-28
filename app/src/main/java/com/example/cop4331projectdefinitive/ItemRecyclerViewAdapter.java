@@ -1,11 +1,12 @@
 package com.example.cop4331projectdefinitive;
 
+// Imports
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -13,8 +14,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
+/**
+ * RecyclerView Adapter that inflates the item_card_layout and is used to populate the Recycler View for
+ * MenuItemActivity and activity_menu_item.xml. In addition to filling the RecyclerView with Strings from
+ * detailList, this class keeps track of selected items using selectedDetails.
+ */
+
 public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerViewAdapter.ViewHolder>{
 
+    // Variable Declaration
     private ArrayList<String> detailList;
     private ArrayList<String> selectedDetails;
     private Context mContext;
@@ -36,6 +44,8 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         String selected = detailList.get(position);
         holder.detail.setText(selected);
 
+        // On click listener that checks the status of detail checkboxes and adds or removes them from
+        // the selectedDetails ArrayList
         holder.detail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,6 +69,7 @@ public class ItemRecyclerViewAdapter extends RecyclerView.Adapter<ItemRecyclerVi
         notifyDataSetChanged();
     }
 
+    // Function that is called by MenuItemActivity to get the applied MenuItem customization
     public ArrayList<String> returnSelected() {
         return selectedDetails;
     }

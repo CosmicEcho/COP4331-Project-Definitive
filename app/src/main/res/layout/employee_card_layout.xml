@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="6dp">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/advance_button"
+            android:id="@+id/employeeAdvButton"
+            android:layout_centerVertical="true"
+            android:layout_below="@+id/empCostTxt"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/employeeAdvButton"
+            android:layout_below="@+id/empCostTxt"
+            android:id="@+id/empItemRecView"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cart Cost"
+            android:layout_margin="4dp"
+            android:layout_below="@id/empViewUserName"
+            android:id="@+id/empCostTxt"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Order Status"
+            android:textStyle="bold"
+            android:layout_alignParentRight="true"
+            android:id="@+id/empStatusTxt"
+            android:layout_marginRight="4dp"
+            android:layout_marginTop="4dp"
+            android:layout_marginBottom="4dp"
+            android:layout_below="@+id/empViewUserName"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="User Name"
+            android:textAlignment="center"
+            android:layout_margin="4dp"
+            android:id="@+id/empViewUserName"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

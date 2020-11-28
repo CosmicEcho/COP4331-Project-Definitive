@@ -1,6 +1,16 @@
 package com.example.cop4331projectdefinitive;
 
+// Imports
+
 import java.util.ArrayList;
+
+/** Utils.java is a supporting class that contains static ArrayLists of individual sections of the
+ * restaurant menu, as well as an ArrayList that contains all of the items together. In addition,
+ * the class supports a static currentUser and a static cart.
+ *
+ * The static variables are used to emulate global variables across the application, though
+ * only the cart and currentUser are altered during runtime.
+ */
 
 public class Utils {
     private static Utils instance;
@@ -57,10 +67,6 @@ public class Utils {
         return cart;
     }
 
-    public static void setCart(Cart cart) {
-        Utils.cart = cart;
-    }
-
     public static MenuItem findByID(int id) {
         for (MenuItem myItem : allItems) {
             if(myItem.getId() == id) return myItem;
@@ -68,6 +74,7 @@ public class Utils {
         return null;
     }
 
+    // Large initialization of the menu items
     private void initMenu() {
         String nameContainer;
         String descriptionContainer;

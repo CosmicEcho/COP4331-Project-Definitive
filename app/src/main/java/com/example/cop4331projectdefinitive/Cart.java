@@ -1,6 +1,13 @@
 package com.example.cop4331projectdefinitive;
 
+// Imports
 import java.util.ArrayList;
+
+/**
+ * Class that represents the user's cart. Contains an ArrayList of MenuItems to simulate shopping cart
+ * contents, as well as a double that is calculated every time a MenuItem is added or removed from
+ * the cart.
+ */
 
 public class Cart {
     private ArrayList<MenuItem> cartContents;

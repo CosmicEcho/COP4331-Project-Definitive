@@ -1,5 +1,10 @@
 package com.example.cop4331projectdefinitive;
 
+/**
+ * Order class that represents the user's order to the restaurant. Contains a Cart and a String that
+ * holds the order's status.
+ */
+
 public class Order {
     public Cart storedCart;
     public String orderStatus;
