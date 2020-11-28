@@ -14,6 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 /**
+ * This project is the sole creation of Winton Artz for COP 4331C. This project fulfills the
+ * requirements of Project 1: Restaurant System
+ *
  * LogInActivity.java is the main activity class, due it being the first screen a user
  * will encounter when opening the application. Its matching XML layout file is
  * "activity_main.xml"
