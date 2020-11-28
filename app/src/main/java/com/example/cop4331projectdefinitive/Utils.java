@@ -67,6 +67,10 @@ public class Utils {
         return cart;
     }
 
+    public static void setCart(Cart cart) {
+        Utils.cart = cart;
+    }
+
     public static MenuItem findByID(int id) {
         for (MenuItem myItem : allItems) {
             if(myItem.getId() == id) return myItem;

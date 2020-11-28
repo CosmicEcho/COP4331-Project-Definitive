@@ -85,6 +85,7 @@ public class MenuActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, MenuItemActivity.class);
                 intent.putExtra(FOOD_KEY, myItem.getId());
                 startActivity(intent);
+                break;
             }
         }
 

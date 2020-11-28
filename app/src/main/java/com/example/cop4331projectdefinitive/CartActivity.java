@@ -1,6 +1,7 @@
 package com.example.cop4331projectdefinitive;
 
 // Imports
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -35,6 +36,7 @@ public class CartActivity extends AppCompatActivity {
     CartParentRecAdapter cartRecViewAdapter;
     TextView cartTaxText, cartTotalCostText;
     Button cartSubmitOrder;
+    CheckCartLoop checkCartLoop;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,6 +82,7 @@ public class CartActivity extends AppCompatActivity {
                 builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        checkCartLoop.cancel(true);
                         SubmitOrder submitOrder = new SubmitOrder();
                         submitOrder.execute();
                     }
@@ -93,6 +96,37 @@ public class CartActivity extends AppCompatActivity {
                 builder.create().show();
             }
         });
+
+        checkCartLoop = new CheckCartLoop();
+        checkCartLoop.execute();
+    }
+
+    // AsyncTask that checks to see if the total cost changes, likely due to removing an item from the
+    // cart. If the total changes, resets the text and calls itself again. Cancels if submit order is called
+    // or back is pressed.
+    private class CheckCartLoop extends AsyncTask<Void, Void, Void> {
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            double cartTax = Utils.getInstance().getCart().getTotalCartCost() * 0.065;
+            double totalCost = Utils.getInstance().getCart().getTotalCartCost() * 1.065;
+
+            cartTaxText.setText(String.format("Tax: $ %.2f",cartTax));
+            cartTotalCostText.setText(String.format("Total Cost: $ %.2f",totalCost));
+
+            checkCartLoop = new CheckCartLoop();
+            checkCartLoop.execute();
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            double cartCost = Utils.getInstance().getCart().getTotalCartCost();
+            while(cartCost == Utils.getInstance().getCart().getTotalCartCost()) {
+                if(isCancelled()) {
+                    break;
+                }
+            }
+            return null;
+        }
     }
 
     // AsyncTask that calls a singleton instance of the AppDatabase and updates the current user's
@@ -114,9 +148,16 @@ public class CartActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(Void aVoid) {
+            Utils.getInstance().setCart(new Cart());
             Intent intent = new Intent(CartActivity.this, ViewOrderActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        checkCartLoop.cancel(true);
     }
 }
